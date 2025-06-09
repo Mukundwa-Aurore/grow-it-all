@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,17 +20,35 @@ import {
   Zap
 } from "lucide-react";
 
-const Products = () => {
-  const [selectedProduct, setSelectedProduct] = useState(null);
+interface Product {
+  id: number;
+  name: string;
+  category: string;
+  price: string;
+  rating: number;
+  image: string;
+  description: string;
+  features: string[];
+  specs: Record<string, string>;
+}
 
-  const categories = [
+interface Category {
+  id: string;
+  label: string;
+  icon: any;
+}
+
+const Products = () => {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  const categories: Category[] = [
     { id: "equipment", label: "Farm Equipment", icon: Tractor },
     { id: "sensors", label: "IoT Sensors", icon: Wifi },
     { id: "software", label: "Software Solutions", icon: Smartphone },
     { id: "drones", label: "Drones & Satellites", icon: Satellite }
   ];
 
-  const products = {
+  const products: Record<string, Product[]> = {
     equipment: [
       {
         id: 1,
@@ -218,7 +235,7 @@ const Products = () => {
     ]
   };
 
-  const ProductCard = ({ product }) => (
+  const ProductCard = ({ product }: { product: Product }) => (
     <Card className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
       <div className="relative">
         <img 
